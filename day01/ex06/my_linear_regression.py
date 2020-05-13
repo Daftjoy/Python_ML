@@ -25,15 +25,15 @@ class MyLinearRegression():
     
     def cost_elem_(self, y, y_hat):
         ret = []
-        y = np.concatenate(y)
+        y = y.reshape(-1, 1)
         for i in range(len(y)):
             ret.append((1/(2*len(y))) * ((y_hat[i] - y[i])**2))
         return(np.array(ret))
 
     def cost_(self, y, y_hat):
-        y = np.concatenate(y)
-        y_hat = np.concatenate(y_hat)
-        return((y - y_hat).dot(y - y_hat) /(len(y) * 2))
+        y = y.reshape(-1, 1)
+        y_hat = y_hat.reshape(-1, 1)
+        return((y - y_hat).T.dot(y - y_hat) /(len(y) * 2))
     
     def fit_(self, x, y):
         while self.cost_(y, self.predict_(x)) != 0 and self.max_iter != 0:
